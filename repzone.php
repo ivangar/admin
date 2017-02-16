@@ -68,8 +68,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/repzone_events.php');
                         <li><a href="index.php?action=logout">Logout</a>
                         </li>
                       </ul>
-                       <form class="navbar-form navbar-right" role="form" id='search_form' name='search_form' action='https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/lib/search.php' method='post' accept-charset='UTF-8'>
-                          <input type="text" class="form-control" name="search_q" placeholder="Search...">
+                       <form class="navbar-form navbar-right" role="form" style="width:250px;" id='search_form' name='search_form' action='https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/lib/search.php' method='post' accept-charset='UTF-8'>
+                          <input type="text" class="form-control" style="width:200px;" name="search_q" placeholder="Search...">
                       </form>
                     </div>
 

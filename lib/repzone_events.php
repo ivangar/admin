@@ -41,9 +41,7 @@ class Repzone{
 
 	function Get_Events(){
 
-		//Limit the result object from start row passed (0, 10, 20, 30 ...) in chunks of 10
-
-		$sql = 'SELECT * FROM events';
+		$sql = "SELECT events.event_date, events.location, reps.rep_name, moderators.mod_name FROM events, reps, moderators WHERE events.rep_id = reps.rep_id AND events.moderator_id = moderators.moderator_id ORDER BY events.event_date ASC";
         $query = $this->con->prepare($sql);
         $query->execute();
 
@@ -52,38 +50,11 @@ class Repzone{
         }
 
         return true;
-
 	}
 
-	function Sanitize($str,$remove_nl=true)
-	{
-	    if($remove_nl)
-	    {
-	        $injections = array('/(\n+)/i',
-	            '/(\r+)/i',
-	            '/(\t+)/i',
-	            '/(%0A+)/i',
-	            '/(%0D+)/i',
-	            '/(%08+)/i',
-	            '/(%09+)/i'
-	            );
-	        $str = preg_replace($injections,'',$str);
-	    }
-
-	    return $str;
-	}  
-
 	function CreateExcelReport(){
-		// Create new PHPExcel object
-
-		$var = 'Im in the excel report fucntion';
-		$this->Get_Events();
-		print_r($this->events);
 		
-		/*
-		$objPHPExcel = new PHPExcel();
-
-		$rows = array();
+		$objPHPExcel = new PHPExcel();  // Create new PHPExcel object
 		$row_count = 2;  //counter to loop through the Excel spreadsheet rows
 
 		$objPHPExcel->getProperties()->setCreator("dxLink")
@@ -95,78 +66,51 @@ class Repzone{
 							 ->setCategory("Test result file");
 
 		$objPHPExcel->setActiveSheetIndex(0);
-		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'User')
-				            ->setCellValue('B1', 'Topic Id')
-				            ->setCellValue('C1', 'Province')
-				            ->setCellValue('D1', 'Profession')
-				            ->setCellValue('E1', 'Comment')
-				            ->setCellValue('F1', 'Date Posted')
-				            ->setCellValue('G1', 'Topic');
+		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Event date')
+				            ->setCellValue('B1', 'Event location')
+				            ->setCellValue('C1', 'Rep name')
+				            ->setCellValue('D1', 'Speaker name');
+	
+        $this->Get_Events(); //Get the events query
 
-		$sql = "SELECT posts.post_id, posts.topic_id, posts.province, posts.profession, posts.message, posts.date_posted, doctors.first_name, doctors.last_name FROM posts, doctors WHERE doctors.doctor_id = posts.doctor_id ORDER BY posts.date_posted DESC";
-        $query = $this->con->prepare($sql);
-        $query->execute();
-
-        while($result_row = $query->fetch(PDO::FETCH_ASSOC) ){
-        	$fisrt_name = $result_row['first_name'];
-        	$last_name = $result_row['last_name'];
-        	$doctor = $fisrt_name . ' ' . $last_name;
-        	$post_id = $result_row['post_id'];  
-			$topic_id = $result_row['topic_id'];  
-			$province = $result_row['province']; 
-			$profession = $result_row['profession']; 
-			$message = $result_row['message'];  
-			$date_posted = $result_row['date_posted'];
-			$topic = $this->Get_Topic($topic_id);
-			array_push($rows, array($doctor, $topic_id, $province, $profession, $message, $date_posted, $topic));
-        }
-        
-        
-        foreach ($rows as $row => $column) {
-
-			$objPHPExcel->getActiveSheet()->setCellValue('A' . $row_count, $column[0])
-							            ->setCellValue('B' . $row_count, $column[1])
-							            ->setCellValue('C' . $row_count, $column[2])
-							            ->setCellValue('D' . $row_count, $column[3])
-							            ->setCellValue('E' . $row_count, $column[4])
-							            ->setCellValue('F' . $row_count, $column[5])
-							            ->setCellValue('G' . $row_count, $column[6]);
+	    foreach ($this->events as $index => $event) {
+			$objPHPExcel->getActiveSheet()->setCellValue('A' . $row_count, $event["event_date"])
+							            ->setCellValue('B' . $row_count, $event["location"])
+							            ->setCellValue('C' . $row_count, $event["rep_name"])
+							            ->setCellValue('D' . $row_count, $event["mod_name"]);
 
 			$objPHPExcel->getActiveSheet()->getRowDimension($row_count)->setRowHeight(50); 
 
-		    $row_count++;		
+		    $row_count++;	
 		}	
 
 		//Set widths of all columns
-		$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(25);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(140);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(150);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(100);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(55);
 
 		//Fill design settings for first heading row
 		$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(30);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF808080');
-		$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->setSize(16);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF808080');
+		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(16);
 		$objPHPExcel->getActiveSheet()->freezePane('A2');
 
 		//Align all cells
-		$objPHPExcel->getActiveSheet()->getStyle('A1:G' . $row_count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:G' . $row_count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:D' . $row_count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:D' . $row_count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 		
 		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-		$objWriter->save('../Reports/dxLink_Forum_report.xlsx');
+		$objWriter->save('../Reports/dxLink_repzone.xlsx');
 		
 		echo 'exported';
 		return true;
-		*/
+
 	}
 
 } //ends class
@@ -178,7 +122,7 @@ if(isset($_COOKIE['remember_dxLinkAdmin']) && !empty($_COOKIE['remember_dxLinkAd
 if (isset($_REQUEST['action'])) {
 	
 	$action = $_REQUEST['action'];
-	
+
 	//Instance of Repzone class
 	$repzone_events = new Repzone();
 
