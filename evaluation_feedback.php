@@ -74,6 +74,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/feedback.php');
                           <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/program_evaluations.php">Program Evaluations</a></li>
                           <li class="active"><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/evaluation_feedback.php">Feedback</a></li>
                           <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/statistics.php">Metrics</a></li>
+                          <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php">Repzone</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
 
@@ -99,6 +100,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/feedback.php');
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/program_evaluations.php"><i class="fa fa-table"></i>&nbsp; Program Evaluations</a></li>
                   <li class="active"><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/evaluation_feedback.php"><i class="fa fa-comment"></i>&nbsp; Evaluation Feedback</a></li>
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/statistics.php"><i class="fa fa-bar-chart"></i>&nbsp; Metrics</a></li>
+                  <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp; Repzone</a></li>
                 </ul>
               </div>
               <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

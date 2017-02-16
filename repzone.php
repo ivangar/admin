@@ -87,7 +87,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/repzone_events.php');
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/program_evaluations.php"><i class="fa fa-table"></i>&nbsp; Program Evaluations</a></li>
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/evaluation_feedback.php"><i class="fa fa-comment"></i>&nbsp; Evaluation Feedback</a></li>
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/statistics.php"><i class="fa fa-bar-chart"></i>&nbsp; Metrics</a></li>
-                  <li class="active"><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php"><i class="fa fa-bar-chart"></i>&nbsp; Repzone</a></li>
+                  <li class="active"><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp; Repzone</a></li>
                 </ul>
               </div>
               <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -95,11 +95,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/repzone_events.php');
                <div class="row">
                  <div class="col-sm-11 ">
                   <h1 class="page-header" style="margin-top: 0; margin-bottom: 40px;"> Repzone events</h1>
-                 </div>
-                 <div class="col-sm-1 " >
-                    <a href="https://www.dxlink.ca/admin/Reports/dxLink_Forum_report.xlsx" class="btn btn-success" id="export"><i class="fa fa-download fa-lg"></i>&nbsp; Export</a>
+                 </div></div>
+                 <div>
+                 </br>
+                  <span style="font-size:25px; color:rgb(186, 151, 103)">Export all events to Excel: </span>
+                    <a href="https://dxlink.ca/admin/Reports/dxLink_Forum_report.xlsx" class="btn btn-success" id="export"><i class="fa fa-download fa-lg"></i>&nbsp; Export</a>
                   </div>
-              </div>
+            
 
             </div>
           </div>
