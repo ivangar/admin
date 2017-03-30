@@ -41,7 +41,7 @@ class Repzone{
 
 	function Get_Events(){
 
-		$sql = "SELECT events.event_date, events.location, reps.rep_name, moderators.mod_name FROM events, reps, moderators WHERE events.rep_id = reps.rep_id AND events.moderator_id = moderators.moderator_id ORDER BY events.event_date ASC";
+		$sql = "SELECT events.event_date, events.location, reps.rep_name, reps.company, moderators.mod_name, moderators.mod_credentials, moderators.mod_institution, address.street_address, address.city, address.province FROM events, reps, moderators, address WHERE events.rep_id = reps.rep_id AND events.moderator_id = moderators.moderator_id AND moderators.address_id = address.address_id ORDER BY events.event_date ASC";
         $query = $this->con->prepare($sql);
         $query->execute();
 
@@ -69,7 +69,13 @@ class Repzone{
 		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Event date')
 				            ->setCellValue('B1', 'Event location')
 				            ->setCellValue('C1', 'Rep name')
-				            ->setCellValue('D1', 'Speaker name');
+				            ->setCellValue('D1', 'Company')
+				            ->setCellValue('E1', 'Speaker name')
+				            ->setCellValue('F1', 'Credentials')
+				            ->setCellValue('G1', 'Institution')
+				            ->setCellValue('H1', 'Address')
+				            ->setCellValue('I1', 'City')
+				            ->setCellValue('J1', 'Province');
 	
         $this->Get_Events(); //Get the events query
 
@@ -77,7 +83,13 @@ class Repzone{
 			$objPHPExcel->getActiveSheet()->setCellValue('A' . $row_count, $event["event_date"])
 							            ->setCellValue('B' . $row_count, $event["location"])
 							            ->setCellValue('C' . $row_count, $event["rep_name"])
-							            ->setCellValue('D' . $row_count, $event["mod_name"]);
+							            ->setCellValue('D' . $row_count, $event["company"])
+							            ->setCellValue('E' . $row_count, $event["mod_name"])
+							            ->setCellValue('F' . $row_count, $event["mod_credentials"])
+							            ->setCellValue('G' . $row_count, $event["mod_institution"])
+										->setCellValue('H' . $row_count, $event["street_address"])
+										->setCellValue('I' . $row_count, $event["city"])
+										->setCellValue('J' . $row_count, $event["province"]);
 
 			$objPHPExcel->getActiveSheet()->getRowDimension($row_count)->setRowHeight(50); 
 
@@ -89,17 +101,23 @@ class Repzone{
 		$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(100);
 		$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(55);
 		$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(55);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(55);
 
 		//Fill design settings for first heading row
 		$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(30);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF808080');
-		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(16);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF808080');
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->setSize(16);
 		$objPHPExcel->getActiveSheet()->freezePane('A2');
 
 		//Align all cells
-		$objPHPExcel->getActiveSheet()->getStyle('A1:D' . $row_count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$objPHPExcel->getActiveSheet()->getStyle('A1:D' . $row_count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J' . $row_count)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J' . $row_count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet

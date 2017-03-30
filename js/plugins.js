@@ -22,3 +22,6 @@
 }());
 
 // Place any jQuery/helper plugins in here.
+$(document).ready(function () {
+    $("#search_form > :input").width(290);
+});//end document.ready

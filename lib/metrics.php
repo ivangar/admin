@@ -199,18 +199,18 @@ class Metrics{
           			<h2 class='sub-header section'> {$no_users} users registered in {$this->year} </h2>\n
       			</div>\n
       			<div class='row chart_row' >
-        			<div class='col-sm-6 '>
+        			<div class='col-sm-6 col-md-6 col-lg-7'>
          		 		<canvas id='canvas{$this->year}' height='200' width='400'></canvas>
         			</div>
-        			<div class='col-sm-6 ' >
+        			<div class='col-sm-6 col-md-6 col-lg-5' >
         				<div class='row' style='margin-left:80px;'> 
 					       <h2 class='sub-header section'> Programs Popularity in {$this->year} </h2>
 					    </div>
-        				<div class='row' style='margin-left:20px;margin-top:20px;'> 
-        					<div class='col-xs-12 col-lg-7' >
-					        	<canvas id='canvasPie{$this->pieChart_id}' width='300' height='250' ></canvas> 
+        				<div class='row' style='margin-left:20px;margin-top:20px;margin-right:30px'> 
+        					<div class='col-xs-12 col-md-10' >
+					        	<canvas id='canvasPie{$this->pieChart_id}' ></canvas> 
 					       	</div>
-					        <div class='col-xs-12 col-lg-5' >
+					        <div class='col-xs-12 col-md-2' >
 					        	<div id='PieLegend{$this->pieChart_id}'></div>
 					       	</div>
 					    </div>

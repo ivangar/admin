@@ -112,10 +112,10 @@ class Summary{
 						       <h2 class='sub-header section'> All Programs Completed </h2>
 						    </div>
 	        				<div class='row' style='margin-left:20px;'> 
-	        					<div class='col-xs-12 col-lg-7' >
+	        					<div class='col-xs-12 col-lg-10' >
 						        	<canvas id='canvasSummary'></canvas>
 						       	</div>
-						        <div class='col-xs-12 col-lg-5' >
+						        <div class='col-xs-12 col-lg-2' >
 						        	<div id='BarLegend' style='margin: 20px auto;'></div>
 						       	</div>
 						    </div>

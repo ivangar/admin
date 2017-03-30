@@ -85,17 +85,16 @@ else{ $users = $_GET['users']; }
                           <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/program_evaluations.php">Program Evaluations</a></li>
                           <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/evaluation_feedback.php">Feedback</a></li>
                           <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/statistics.php">Metrics</a></li>
-                          <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php">Repzone</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
 
                         <li><a href="index.php?action=logout">Logout</a>
                         </li>
                       </ul>
-                       <form class="navbar-form navbar-right" role="form" id='search_form' name='search_form' action='https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/lib/accounts.php' method='post' accept-charset='UTF-8'>
+                       <form class="navbar-form navbar-right" role="form" style="" style="width:365px;" id='search_form' name='search_form' action='https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/lib/accounts.php' method='post' accept-charset='UTF-8'>
                           <div class="form-group">
-                              <input type="text" class="form-control" name="search_q" placeholder="Search...">
-                              <input type="text" class="form-control secondary" name="search_q2">
+                              <input type="text" class="form-control" style="width:180px;" name="search_q" placeholder="Search...">
+                              <input type="text" class="form-control secondary" style="width:120px;" name="search_q2">
                           </div>
                           <div class="form-group">
                               <button id="button1id" name="button1id" class="btn btn-success btn-sm">Search</button>

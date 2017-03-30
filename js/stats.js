@@ -183,6 +183,7 @@ $(document).ready(function () {
       var ctx = document.getElementById(programCanvas).getContext("2d");
 
       var myPieChart = new Chart(ctx).Pie(pieData, {
+       responsive: true,
        animateScale : true,
        animationSteps : 60,
        animationEasing : "easeInOutSine"
