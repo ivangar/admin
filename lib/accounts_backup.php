@@ -111,8 +111,9 @@ class Accounts{
     	$program_type = 'accredited';
     	$accredited_programs = array();
 
-    	$sql = "SELECT DISTINCT program_id FROM programs";
+    	$sql = "SELECT DISTINCT program_id FROM programs WHERE program_type = :type";
         $query = $this->con->prepare($sql);
+        $query->bindValue(':type', "accredited");
         $query->execute();
 
         while($result_row = $query->fetch(PDO::FETCH_ASSOC) ){
@@ -485,7 +486,7 @@ class Accounts{
 	}
 
 	function Excel_Alphabet_iterate($index){
-		$alphabet = array('K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+		$alphabet = array('L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
 		return $alphabet[$index];
 	}
 
@@ -524,8 +525,9 @@ class Accounts{
 				            ->setCellValue('F1', 'Postal Code')
 				            ->setCellValue('G1', 'Profession')
 				            ->setCellValue('H1', 'Specialty')
-				            ->setCellValue('I1', 'Registered')
-				            ->setCellValue('J1', 'Last Visit');
+				            ->setCellValue('I1', 'Language')
+				            ->setCellValue('J1', 'Registered')
+				            ->setCellValue('K1', 'Last Visit');
 
 		$all_programs = $this->Get_All_Programs();
 
@@ -535,7 +537,7 @@ class Accounts{
 			$objPHPExcel->getActiveSheet()->getColumnDimension($letter)->setWidth(85);
 		}
 
-		$sql = "SELECT doctor_id, first_name, last_name, email, country, province, postal_code, profession, specialty, DATE_FORMAT(registration_date,'%d-%m-%Y') AS registered, DATE_FORMAT(last_visit,'%Y-%m-%d') AS last_visit FROM `doctors` WHERE active = :active_user ORDER BY registered DESC";
+		$sql = "SELECT doctor_id, first_name, last_name, email, country, province, postal_code, profession, specialty, language, DATE_FORMAT(registration_date,'%d-%m-%Y') AS registered, DATE_FORMAT(last_visit,'%Y-%m-%d') AS last_visit FROM `doctors` WHERE active = :active_user ORDER BY registered DESC";
         $query = $this->con->prepare($sql);
         $query->bindValue(':active_user', 1);
         $query->execute();
@@ -550,6 +552,7 @@ class Accounts{
 			$postal_code = $result_row['postal_code'];
 			(strcmp($result_row['profession'],'Other') == 0) ? $profession = 'Healthcare Professional'  : $profession = $result_row['profession'];
 			$specialty = $result_row['specialty'];
+			$language = $result_row['language'];
 			$registration_date = $result_row['registered'];
 			$last_visit = $result_row['last_visit'];
 			$no_completed_programs = $this->Get_Excel_Programs_completed($result_row['doctor_id']);
@@ -560,7 +563,7 @@ class Accounts{
 				$programs_completed[$program_cell] = $program_name;
 			}	
 
-			array_push($rows, array($first_name, $last_name, $email, $country, $province, $postal_code, $profession, $specialty, $registration_date, $last_visit, $programs_completed));
+			array_push($rows, array($first_name, $last_name, $email, $country, $province, $postal_code, $profession, $specialty, $language, $registration_date, $last_visit, $programs_completed));
         }
         
         foreach ($rows as $row => $column) {
@@ -574,9 +577,10 @@ class Accounts{
 							            ->setCellValue('G' . $row_count, $column[6])
 							            ->setCellValue('H' . $row_count, $column[7])
 							            ->setCellValue('I' . $row_count, $column[8])
-							            ->setCellValue('J' . $row_count, $column[9]);
+							            ->setCellValue('J' . $row_count, $column[9])
+							            ->setCellValue('k' . $row_count, $column[10]);
 
-			foreach ($column[10] as $cell => $title) {
+			foreach ($column[11] as $cell => $title) {
 				$objPHPExcel->getActiveSheet()->setCellValue($cell . $row_count, $title);
 			}	
 
@@ -635,11 +639,13 @@ if(isset($_POST['search_q']))
     else{ $_SESSION['error'] = 'We are sorry, your query does not match any record. Please try again'; }
 
     if(isset($_SESSION['error']))
-        header("Location: ../users.php");
+    	echo 'error';
+        //header("Location: ../users.php");
 
     else{
     	$total_users = $search->total_no_users;
-    	header("Location: ../users.php?search=result&users=" . $total_users);
+    	echo "$total_users";
+    	//header("Location: ../users.php?search=result&users=" . $total_users);
     }
        
 }

@@ -191,6 +191,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/forum_topics.php');
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script src="js/scroll.js"></script>
+        <script src="/js/jquery.blockUI.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     </body>

@@ -111,8 +111,9 @@ class Accounts{
     	$program_type = 'accredited';
     	$accredited_programs = array();
 
-    	$sql = "SELECT DISTINCT program_id FROM programs";
+    	$sql = "SELECT DISTINCT program_id FROM programs WHERE program_type = :type";
         $query = $this->con->prepare($sql);
+        $query->bindValue(':type', "accredited");
         $query->execute();
 
         while($result_row = $query->fetch(PDO::FETCH_ASSOC) ){
@@ -528,14 +529,6 @@ class Accounts{
 				            ->setCellValue('J1', 'Registered')
 				            ->setCellValue('K1', 'Last Visit');
 
-		$all_programs = $this->Get_All_Programs();
-
-		foreach ($all_programs as $index => $program_id) {
-			$letter = $this->Excel_Alphabet_iterate($index);
-			$objPHPExcel->getActiveSheet()->setCellValue($letter . 1, $program_id);
-			$objPHPExcel->getActiveSheet()->getColumnDimension($letter)->setWidth(85);
-		}
-
 		$sql = "SELECT doctor_id, first_name, last_name, email, country, province, postal_code, profession, specialty, language, DATE_FORMAT(registration_date,'%d-%m-%Y') AS registered, DATE_FORMAT(last_visit,'%Y-%m-%d') AS last_visit FROM `doctors` WHERE active = :active_user ORDER BY registered DESC";
         $query = $this->con->prepare($sql);
         $query->bindValue(':active_user', 1);
@@ -555,14 +548,8 @@ class Accounts{
 			$registration_date = $result_row['registered'];
 			$last_visit = $result_row['last_visit'];
 			$no_completed_programs = $this->Get_Excel_Programs_completed($result_row['doctor_id']);
-			
-			foreach ($no_completed_programs as $id => $program_name) {
-				$program_index = $this->Get_program_index($all_programs, $id);
-				$program_cell = $this->Excel_Alphabet_iterate($program_index);
-				$programs_completed[$program_cell] = $program_name;
-			}	
 
-			array_push($rows, array($first_name, $last_name, $email, $country, $province, $postal_code, $profession, $specialty, $language, $registration_date, $last_visit, $programs_completed));
+			array_push($rows, array($first_name, $last_name, $email, $country, $province, $postal_code, $profession, $specialty, $language, $registration_date, $last_visit));
         }
         
         foreach ($rows as $row => $column) {
@@ -579,17 +566,13 @@ class Accounts{
 							            ->setCellValue('J' . $row_count, $column[9])
 							            ->setCellValue('k' . $row_count, $column[10]);
 
-			foreach ($column[11] as $cell => $title) {
-				$objPHPExcel->getActiveSheet()->setCellValue($cell . $row_count, $title);
-			}	
-
-
 			$objPHPExcel->getActiveSheet()->getRowDimension($row_count)->setRowHeight(16); 
 
 		    $row_count++;		
 		}	
 
 		//Fill design settings for first heading row
+		$letter = 'K';
 		$objPHPExcel->getActiveSheet()->getDefaultColumnDimension()->setWidth(25);
 		$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(20);
 		$objPHPExcel->getActiveSheet()->getStyle('A1:' . $letter . '1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FF808080');
@@ -638,11 +621,11 @@ if(isset($_POST['search_q']))
     else{ $_SESSION['error'] = 'We are sorry, your query does not match any record. Please try again'; }
 
     if(isset($_SESSION['error']))
-        header("Location: ../users.php");
+    	echo 'error';
 
     else{
     	$total_users = $search->total_no_users;
-    	header("Location: ../users.php?search=result&users=" . $total_users);
+    	echo "$total_users";
     }
        
 }
