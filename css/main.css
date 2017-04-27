@@ -424,6 +424,20 @@ table.table-bordered th, table.table-bordered td {
     *zoom: 1;
 }
 
+#freeze-header{
+  position:fixed;
+  top:45px;
+  background-color: #FFF;
+  display:none;
+}
+
+#freeze-header > div > p{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:14px;
+  font-weight:bold;
+  color: #428bca;
+  text-align: left;
+}
 
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
