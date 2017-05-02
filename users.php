@@ -124,60 +124,37 @@ else{ $users = $_GET['users']; }
                 <!--<div class="col-sm-12 col-md-12 main">-->
 
                 <div id="freeze-header">
-                
-                   <div class="col-sm-1 " id="col_1">
+                   <div class="col-sm-1" id="col_1">
                       <p> User</p>
                     </div>
-                   <div class="col-sm-1 " id="col_2">
+                   <div class="col-sm-1" id="col_2">
                       <p> Email</p>
                     </div>
-                    <div class="col-sm-1 " id="col_3">
+                    <div class="col-sm-1" id="col_3">
                       <p> Country</p>
                     </div>
-                    <div class="col-sm-1 " id="col_4">
+                    <div class="col-sm-1" id="col_4">
                       <p> Province</p>
                     </div>   
-                    <div class="col-sm-1 " id="col_5">
+                    <div class="col-sm-1" id="col_5">
                       <p> Postal Code</p>
                     </div>
-                    <div class="col-sm-2 " id="col_6">
+                    <div class="col-sm-2" id="col_6">
                       <p> Profession</p>
                     </div>
-                    <div class="col-sm-2 " id="col_7">
+                    <div class="col-sm-2" id="col_7">
                       <p> Specialty</p>
                     </div>
-                    <div class="col-sm-1 " id="col_8">
+                    <div class="col-sm-1" id="col_8">
                       <p> Registered</p>
                     </div>
-                    <div class="col-sm-1 " id="col_9">
+                    <div class="col-sm-1" id="col_9">
                       <p> Programs Completed</p>
                     </div>
-                    <div class="col-sm-1 " id="col_10">
+                    <div class="col-sm-1" id="col_10">
                       <p> Last Visit</p>
-                    </div>   
-<!--
-                    <table class="table" >
-                      <thead>
-                        <tr>
-                          <th >User</th>
-                          <th >Email</th>
-                          <th >Country</th>
-                          <th >Province</th>
-                          <th >Postal Code</th>
-                          <th >Profession</th>
-                          <th >Specialty</th>
-                          <th style="min-width:90px;">Registered</th>
-                          <th >Programs Completed</th>
-                          <th style="min-width:90px;">Last Visit</th> 
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table> 
--->
-
+                    </div>
                 </div>
-
 
                  <div class="row">
                    <div class="col-sm-11 ">

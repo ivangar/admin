@@ -3,15 +3,14 @@ var ajax_path = 'lib/accounts.php'; //Global var for access to other script
 $(document).ready(function () {
       var comment_id = '';
       var values = [];
+      var max_width = [];
 
       $("html, body").animate({
           scrollTop: 0
       }, 500);
 
       $( window ).resize(function() {
-         var container_width = ((document.getElementById('main').offsetWidth)-80);
-         var sidebar_width = ((document.getElementById('sidebar').offsetWidth)+39);
-         $( "#freeze-header" ).css({"width": container_width, "left": sidebar_width});
+          $( window ).scroll();
       });
 
       $( window ).scroll(function() {
@@ -21,12 +20,14 @@ $(document).ready(function () {
           var sidebar_width = ((document.getElementById('sidebar').offsetWidth)+39);
           $( "#freeze-header" ).css({"width": container_width, "left": sidebar_width});
 
-
           $( "#sortable>thead>tr>th" ).each(function() {
               var cell_width = $( this ).css( "width" );
               values.push(cell_width);
-          });
 
+              var temp = cell_width;
+              max_width.push(temp);
+          });
+          console.log(max_width);
           for(var index = 0; index < values.length; index++){
             var column = index + 1;
             var col_width = values[index];
@@ -34,12 +35,13 @@ $(document).ready(function () {
           }
 
           if (position > 135) {
-             $( "#freeze-header" ).show();
+             $( "#freeze-header" ).show("linear");
           } else {
             $( "#freeze-header" ).hide();
           }
 
           values = [];
+          max_width = [];
       });
 
       $(function(){

@@ -429,6 +429,11 @@ table.table-bordered th, table.table-bordered td {
   top:45px;
   background-color: #FFF;
   display:none;
+  border-bottom: 2px solid #808080;
+}
+
+#freeze-header > div {
+  padding-left: 8px;
 }
 
 #freeze-header > div > p{
@@ -437,6 +442,7 @@ table.table-bordered th, table.table-bordered td {
   font-weight:bold;
   color: #428bca;
   text-align: left;
+  margin: 15px 0 5px;
 }
 
 /* ==========================================================================
@@ -526,4 +532,10 @@ table.table-bordered th, table.table-bordered td {
     h3 {
         page-break-after: avoid;
     }
+}
+
+@media (max-width: 1540px) {
+  #freeze-header{
+    display: none !important; 
+  }
 }
