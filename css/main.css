@@ -427,7 +427,10 @@ table.table-bordered th, table.table-bordered td {
 #freeze-header{
   position:fixed;
   top:45px;
-  background-color: #FFF;
+  background-color: #f2f6f8;
+  background: -moz-linear-gradient(top, #f2f6f8, #d8e1e7, #e0eff9); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #f2f6f8,#d8e1e7,#e0eff9); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #f2f6f8,#d8e1e7,#e0eff9); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   display:none;
   border-bottom: 2px solid #808080;
 }

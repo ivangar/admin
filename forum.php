@@ -101,7 +101,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/forum_topics.php');
 
         <div class="container-fluid">
           <div class="row">
-              <div class="col-sm-3 col-md-2 sidebar">
+              <div class="col-sm-3 col-md-2 sidebar" id="sidebar">
                 <ul class="nav nav-sidebar">
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/users.php"><i class="fa fa-user"></i>&nbsp; Users</a></li>
                   <li class="active"><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/forum.php"><i class="fa fa-comment"></i>&nbsp; Discussion Forum</a></li>
@@ -111,8 +111,27 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/lib/forum_topics.php');
                   <li><a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/admin/repzone.php"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp; Repzone</a></li>
                 </ul>
               </div>
-              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="main">
               <!--<div class="col-sm-12 col-md-12 main">-->
+
+                <div id="freeze-header">
+                   <div class="col-sm-2" id="col_1">
+                      <p> User</p>
+                    </div>
+                   <div class="col-sm-1" id="col_2">
+                      <p> Topic ID</p>
+                    </div>
+                    <div class="col-sm-6 col-md-7" id="col_3">
+                      <p> Comment</p>
+                    </div>
+                    <div class="col-sm-2 col-md-1" id="col_4">
+                      <p> Date</p>
+                    </div>   
+                    <div class="col-sm-1" id="col_5">
+                      <p> Delete</p>
+                    </div>
+                </div>
+
                <div class="row">
                  <div class="col-sm-11 ">
                   <h1 class="page-header" style="margin-top: 0; margin-bottom: 40px;"> Discussion Forum (total <?php echo $forum->no_total_posts; ?>)</h1>

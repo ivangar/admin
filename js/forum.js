@@ -2,10 +2,55 @@ var ajax_path = 'lib/forum_topics.php'; //Global var for access to other script
 
 $(document).ready(function () {
       var comment_id = '';
+      var values = [];
+      var max_width = 0;
 
       $("html, body").animate({
           scrollTop: 0
       }, 500);    
+
+      $( window ).resize(function() {
+          $( window ).scroll();
+      });
+
+      $( window ).scroll(function() {
+
+          var position = $(this).scrollTop();
+          var container_width = ((document.getElementById('main').offsetWidth)-80);
+          var sidebar_width = ((document.getElementById('sidebar').offsetWidth)+39);
+          $( "#freeze-header" ).css({"width": container_width, "left": sidebar_width});
+
+          $( "#sortable>thead>tr>th" ).each(function() {
+              var cell_width = $( this ).css( "width" );
+              values.push(cell_width);
+
+              var temp = parseInt(cell_width.match(/\d+/g)[0]); //extract the number portion from px attribute
+              max_width = max_width + temp;
+          });
+
+          for(var index = 0; index < values.length; index++){
+            var column = index + 1;
+            var col_width = values[index];
+            $( "#freeze-header>div#col_" + column ).css("width", col_width);
+          }
+
+          if(max_width > container_width){
+            var difference = (max_width - container_width);
+            var new_width = (parseInt(values[4]) - difference);
+            var new_container_width = (parseInt(container_width) + difference);
+            $( "#freeze-header>div#col_5").css("width", new_width);
+            $( "#freeze-header" ).css("width", new_container_width);
+          }
+
+          if (position > 135) {
+             $( "#freeze-header" ).show("linear");
+          } else {
+            $( "#freeze-header" ).hide();
+          }
+
+          values = [];
+          max_width = 0;
+      });
 
       $(function(){
         $("#sortable").tablesorter();

@@ -3,7 +3,7 @@ var ajax_path = 'lib/accounts.php'; //Global var for access to other script
 $(document).ready(function () {
       var comment_id = '';
       var values = [];
-      var max_width = [];
+      var max_width = 0;
 
       $("html, body").animate({
           scrollTop: 0
@@ -24,14 +24,22 @@ $(document).ready(function () {
               var cell_width = $( this ).css( "width" );
               values.push(cell_width);
 
-              var temp = cell_width;
-              max_width.push(temp);
+              var temp = parseInt(cell_width.match(/\d+/g)[0]); //extract the number portion from px attribute
+              max_width = max_width + temp;
           });
-          console.log(max_width);
+
           for(var index = 0; index < values.length; index++){
             var column = index + 1;
             var col_width = values[index];
             $( "#freeze-header>div#col_" + column ).css("width", col_width);
+          }
+
+          if(max_width > container_width){
+            var difference = (max_width - container_width);
+            var new_width = (parseInt(values[9]) - difference);
+            var new_container_width = (parseInt(container_width) + difference);
+            $( "#freeze-header>div#col_10").css("width", new_width);
+            $( "#freeze-header" ).css("width", new_container_width);
           }
 
           if (position > 135) {
@@ -41,7 +49,7 @@ $(document).ready(function () {
           }
 
           values = [];
-          max_width = [];
+          max_width = 0;
       });
 
       $(function(){
